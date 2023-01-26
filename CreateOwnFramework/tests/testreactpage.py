@@ -11,6 +11,7 @@ import conftest
 from utilities.Baseclass import BaseClass
 from PageObject.mainproduct_ReactPage import MainProduct_ReactPage
 from PageObject.MainPage import MainPage
+from PageObject.subproduct_ReactPage import subproduct_ReactPage
 
 
 conftest.setup("chrome")
@@ -26,17 +27,21 @@ class TestReactPage(BaseClass):
 
         #----------------------------------------------- MainProduct -----------------------------------------
         BaseClass.verifyLinkPresence(self, "//div[1]/div[2]/ul[1]/li[1]")
-        mainproduct = MainProduct_ReactPage(self.driver)
-        mainproduct.getMainProduct().click()
+        mainproduct_obj = MainProduct_ReactPage(self.driver)
+        mainproduct_obj.getMainProduct().click()
         BaseClass.scrollbar()
         
-    #----------------------------------------------- MainProduct -----------------------------------------
+    #----------------------------------------------- subproducts -----------------------------------------
     
-    Honeycomb_product_count = driver.find_elements(By.XPATH, "//*[@id='shopify-section-template--15942692896941__shop-now-page']/div/div[2]/div[1]/div[2]/ul[2]/li")
+    subproduct_ReactPage_obj = subproduct_ReactPage()
+    Honeycomb_product_count = subproduct_ReactPage_obj.countSubProducts()
+    
     for i in range(1, len(Honeycomb_product_count)+1):
-        choose_product = driver.find_element(By.XPATH, "//*[@id='shopify-section-template--15942692896941__shop-now-page']/div/div[2]/div[1]/div[2]/ul[2]/li["+str(i)+"]")
+        choose_product = subproduct_ReactPage_obj.get_SubProduct(i)
         copy_choose_product = choose_product
         choose_product.click()
+        BaseClass.scrollbar()
+        
         print(choose_product.get_attribute("data-target-list-handle"))
         _continue = driver.find_element(By.XPATH,"//div[2]/div[2]/div[2]/div")
         _continue.click() 
