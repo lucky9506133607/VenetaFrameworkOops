@@ -7,15 +7,17 @@ import pandas as pd
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-import conftest
+from conftest import Conftest
 from utilities.Baseclass import BaseClass
 from PageObject.mainproduct_ReactPage import MainProduct_ReactPage
 from PageObject.MainPage import MainPage
 from PageObject.subproduct_ReactPage import subproduct_ReactPage
 from PageObject.selectmaterial_ReactPage import selectmaterial_ReactPage
+from PageObject.colour_ReactPage import colour_ReactPage
 
 
-conftest.setup("chrome")
+obj = Conftest
+obj.setup("chrome")
 
 class TestReactPage(BaseClass):
     flag = 0
@@ -44,7 +46,7 @@ class TestReactPage(BaseClass):
             copy_choose_product = choose_product
             choose_product.click()
             print(subproduct_ReactPage_obj.get_SubProductName(i))
-            BaseClass.scrollbar()
+            BaseClass.scrollbar("continue")
             
             #------------------------------------------- Material -------------------------------------------
             
@@ -67,22 +69,26 @@ class TestReactPage(BaseClass):
                 else:
                     pass
             if self.flag == 1:
-                _next = driver.find_element(By.XPATH, "//*[@id='root']/div/div/div/div[2]/div[2]/button[2]")
-                _next.click()
-                # loop for sheer colors
-                sheer_colors_count = driver.find_elements(By.XPATH, "//*[@id='root']/div/div/div/div[2]/div[1]/div[4]/div/div[3]/span")
+                #_next = driver.find_element(By.XPATH, "//*[@id='root']/div/div/div/div[2]/div[2]/button[2]")
+                BaseClass.scrollbar("next")
+                
+                #---------------------------------------  loop for sheer colors ----------------------------
+                
+                #sheer_colors_count = driver.find_elements(By.XPATH, "//*[@id='root']/div/div/div/div[2]/div[1]/div[4]/div/div[3]/span")
+                colour_ReactPage_obj = colour_ReactPage(self.driver)
+                sheer_colors_count = colour_ReactPage_obj.countColourOptions()
                 for i in range(1, len(sheer_colors_count)+1):
-                    select_color = driver.find_element(By.XPATH, "//*[@id='root']/div/div/div/div[2]/div[1]/div[4]/div/div[3]/span["+str(i)+"]")
+                    select_color = colour_ReactPage_obj.select_ColourOption(i)
                     print("color id ====== "+str(i))
                     flag = 0
                 
             else:
                 print("Sheer not available")
             
-            driver.get("https://venetablinds.com.au/pages/shop-now?step=1&current=bottom-up&pre=honeycomb-blinds")
-    
-    
-    
+            #driver.get("https://venetablinds.com.au/pages/shop-now?step=1&current=bottom-up&pre=honeycomb-blinds")
+            
+            conftest.updated_link("chrome")
+                
     
     
 #inheritance concept apply  

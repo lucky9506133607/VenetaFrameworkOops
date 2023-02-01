@@ -6,11 +6,10 @@ class selectmaterial_ReactPage:
     def __init__(self, driver):
         self.driver = driver
 
-    count_materials = (By.XPATH, "//*[@id='root']/div/div/div/div[2]/div[1]/div[3]/div/div[3]/div")
-    
+    count_colours = (By.XPATH, "//*[@id='root']/div/div/div/div[2]/div[1]/div[4]/div/div[3]/span")
 
-    def countMaterialOptions(self):
-        return self.driver.find_elements(self.count_materials)
+    def countColourOptions(self):
+        return self.driver.find_elements(self.count_colours)
     
     def get_MaterialName(self, productid):
         return self.driver.find_element(By.XPATH, "//*[@id='root']/div/div/div/div[2]/div[1]/div[3]/div/div[3]/div["+str(productid)+"]")            
