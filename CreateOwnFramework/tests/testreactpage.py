@@ -10,7 +10,7 @@ from selenium.webdriver.support import expected_conditions as EC
 #from utilities.conftest import Conftest
 
 
-import conftest
+from tests import conftest
 from utilities.Baseclass import BaseClass
 from PageObject.mainproduct_ReactPage import MainProduct_ReactPage
 from PageObject.MainPage import MainPage
@@ -19,14 +19,11 @@ from PageObject.selectmaterial_ReactPage import selectmaterial_ReactPage
 from PageObject.colour_ReactPage import colour_ReactPage
 
 
-obj = conftest.Conftest
-obj.setup("chrome")
-
 class TestReactPage(BaseClass):
     flag = 0
 
     def chooseProduct(self):
-        BaseClass.verifyLinkPresence("//*[@id='shopify-section-header']/header/div/div/div[2]/a")
+        self.verifyLinkPresence("//*[@id='shopify-section-header']/header/div/div/div[2]/a")
         
         #----------------------------------------------- MainPage -----------------------------------------
         design_your_own = MainPage(self.driver)
@@ -41,7 +38,7 @@ class TestReactPage(BaseClass):
         
     #----------------------------------------------- subproducts -----------------------------------------
     
-        subproduct_ReactPage_obj = subproduct_ReactPage()
+        subproduct_ReactPage_obj = subproduct_ReactPage(self.driver)
         Honeycomb_product_count = subproduct_ReactPage_obj.countSubProducts()
     
         for i in range(1, len(Honeycomb_product_count)+1):
@@ -90,9 +87,14 @@ class TestReactPage(BaseClass):
             
             #driver.get("https://venetablinds.com.au/pages/shop-now?step=1&current=bottom-up&pre=honeycomb-blinds")
             
-            obj.updated_link("https://venetablinds.com.au/pages/shop-now?step=1&current=bottom-up&pre=honeycomb-blinds")
+            conf.updated_link("https://venetablinds.com.au/pages/shop-now?step=1&current=bottom-up&pre=honeycomb-blinds")
             
-            
+if __name__ == "__main__":
+    conf = conftest.Conftest()
+    conf.setup("chrome")
+    test_react_page = TestReactPage(driver=webdriver)
+    test_react_page.chooseProduct()
+        
             
                 
     
