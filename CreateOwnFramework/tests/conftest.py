@@ -23,3 +23,4 @@ class Conftest:
             driver.maximize_window()
         else:
             print("Driver are not available")
+            

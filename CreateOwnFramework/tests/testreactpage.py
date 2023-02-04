@@ -7,7 +7,10 @@ import pandas as pd
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-from conftest import Conftest
+#from utilities.conftest import Conftest
+
+
+import conftest
 from utilities.Baseclass import BaseClass
 from PageObject.mainproduct_ReactPage import MainProduct_ReactPage
 from PageObject.MainPage import MainPage
@@ -16,7 +19,7 @@ from PageObject.selectmaterial_ReactPage import selectmaterial_ReactPage
 from PageObject.colour_ReactPage import colour_ReactPage
 
 
-obj = Conftest
+obj = conftest.Conftest
 obj.setup("chrome")
 
 class TestReactPage(BaseClass):
@@ -80,14 +83,17 @@ class TestReactPage(BaseClass):
                 for i in range(1, len(sheer_colors_count)+1):
                     select_color = colour_ReactPage_obj.select_ColourOption(i)
                     print("color id ====== "+str(i))
-                    flag = 0
+                    self.flag = 0
                 
             else:
                 print("Sheer not available")
             
             #driver.get("https://venetablinds.com.au/pages/shop-now?step=1&current=bottom-up&pre=honeycomb-blinds")
             
-            conftest.updated_link("chrome")
+            obj.updated_link("https://venetablinds.com.au/pages/shop-now?step=1&current=bottom-up&pre=honeycomb-blinds")
+            
+            
+            
                 
     
     
